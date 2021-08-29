@@ -4,22 +4,29 @@ import { actionCreators } from "./state/index";
 
 function App() {
   // use The useSelektor hook to access the redux state this can be done at any child component
-  const account = useSelector((state) => state.account);
+  const bank = useSelector((state) => state.bank);
 
   // create a dispatch to call actioncreators
   const dispatch = useDispatch();
-  const { depositMoneyAction, withdrawMoneyAction } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { depositMoneyAction, withdrawMoneyAction, selectAmountAction } =
+    bindActionCreators(actionCreators, dispatch);
 
   return (
     <div>
-      <h1>{account}</h1>
+      <h1>{`account balance: ${bank.balance}`}</h1>
+      <h1>{`Transaction amount: ${bank.amount}`}</h1>
       <div>
+        <input
+          type="text"
+          onChange={(e) => {
+            selectAmountAction(e.target.value);
+          }}
+        />
+        <br />
+
         <button
           onClick={() => {
-            depositMoneyAction(1000);
+            depositMoneyAction(bank.amount);
           }}
         >
           deposit
@@ -27,7 +34,7 @@ function App() {
         <br />
         <button
           onClick={() => {
-            withdrawMoneyAction(1);
+            withdrawMoneyAction(bank.amount);
           }}
         >
           withdraw

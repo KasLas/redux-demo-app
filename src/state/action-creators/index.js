@@ -15,3 +15,12 @@ export const withdrawMoneyAction = (amount) => {
     });
   };
 };
+
+export const selectAmountAction = (amount) => {
+  return (dispatch) => {
+    dispatch({
+      type: "amount",
+      payload: amount,
+    });
+  };
+};
